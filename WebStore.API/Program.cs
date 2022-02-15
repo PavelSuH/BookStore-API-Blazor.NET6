@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using Serilog;
+using WebStore.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var connString = builder.Configuration.GetConnectionString("BookStoreAppDbConnection");
+builder.Services.AddDbContext<BookStoreDbContext>(options => options.UseSqlServer(connString));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
