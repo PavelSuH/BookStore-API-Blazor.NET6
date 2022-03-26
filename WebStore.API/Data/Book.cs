@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebStore.API.Data
 {
-    public partial class Book
+    public partial class Book 
     {
         public int Id { get; set; }
         public string? Title { get; set; }
