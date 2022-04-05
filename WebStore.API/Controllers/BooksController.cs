@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebStore.API.Data;
@@ -12,6 +13,8 @@ namespace WebStore.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    
     public class BooksController : ControllerBase
     {
         private BookStoreDbContext _context;
@@ -53,6 +56,7 @@ namespace WebStore.API.Controllers
 
         // POST api/<BooksController>
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreateBook(BookCreateDTO bookDTo)
         {
             if(!ModelState.IsValid)
@@ -68,6 +72,7 @@ namespace WebStore.API.Controllers
 
         // PUT api/<BooksController>/5
         [HttpPut("{id}")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> PutBook(int id, BookUpdateDTO bookDTO)
         {
             var book = await _context.Books.FindAsync(id);
@@ -99,6 +104,7 @@ namespace WebStore.API.Controllers
 
         // DELETE api/<BooksController>/5
         [HttpDelete("{id}")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> DeleteBook(int id)
         {
             var book = await _context.Books.FindAsync(id);
@@ -113,7 +119,7 @@ namespace WebStore.API.Controllers
         }
 
 
-        public async Task<bool> BookExistAsync(int id)
+        private async Task<bool> BookExistAsync(int id)
         {
             return await _context.Books.AnyAsync(c => c.Id == id);
         }

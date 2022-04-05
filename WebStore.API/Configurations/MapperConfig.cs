@@ -2,6 +2,7 @@
 using WebStore.API.Data;
 using WebStore.API.Models.Author;
 using WebStore.API.Models.Book;
+using WebStore.API.Models.User;
 
 namespace WebStore.API.Configurations
 {
@@ -22,6 +23,9 @@ namespace WebStore.API.Configurations
             CreateMap<Book, BookDetailsDTO>()
                .ForMember(c => c.AuthorName, d => d.MapFrom(map => $"{map.Author.FirstName} - {map.Author.LastName}"))
                .ReverseMap();
+             
+            CreateMap<ApiUser, UserDTO>().ReverseMap();
+            CreateMap<ApiUser, LoginUserDTO>().ReverseMap();
         }
     }
 }
